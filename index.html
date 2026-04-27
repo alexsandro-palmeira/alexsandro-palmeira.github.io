@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreamento Veicular em Curitiba e Brasil | GuardionX</title>
+    <link rel="icon" href="logotopo.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00ff88;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #100230;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 700;
+        }
+
+        .nav-links a:hover {
+            color: #00ff88;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 100px 20px;
+            text-align: center;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: pulse 4s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #00ff88;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        .hero .subtitle {
+            font-size: 24px;
+            color: #4db8ff;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .hero .tagline {
+            font-size: 18px;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        .price-highlight {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6f 100%);
+            color: #0a1628;
+            padding: 30px 60px;
+            border-radius: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.4);
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 10px 40px rgba(0, 255, 136, 0.4); }
+            50% { box-shadow: 0 10px 60px rgba(0, 255, 136, 0.7); }
+        }
+
+        .price-highlight .currency {
+            font-size: 32px;
+            vertical-align: super;
+        }
+
+        .price-highlight .period {
+            font-size: 24px;
+            display: block;
+            margin-top: 10px;
+            font-weight: normal;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 25px rgba(0, 123, 255, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(0, 123, 255, 0.6);
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 80px 20px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 60px;
+            color: #00ff88;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 123, 255, 0.3);
+            border-color: rgba(0, 255, 136, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #4db8ff;
+        }
+
+        .feature-card p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Vehicles Section */
+        .vehicles {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .vehicles h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #00ff88;
+        }
+
+        .vehicles-subtitle {
+            font-size: 18px;
+            color: #aaa;
+            margin-bottom: 50px;
+        }
+
+        .vehicles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .vehicle-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            padding: 40px 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(0, 123, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .vehicle-card:hover {
+            border-color: rgba(0, 255, 136, 0.6);
+            transform: scale(1.05);
+        }
+
+        .vehicle-card .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .vehicle-card h3 {
+            font-size: 24px;
+            color: #4db8ff;
+        }
+
+        /* Plans Section */
+        .plans {
+            padding: 80px 20px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .plans h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 60px;
+            color: #00ff88;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .plan-card {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.15) 0%, rgba(0, 255, 136, 0.1) 100%);
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card.featured {
+            border-color: #00ff88;
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.3);
+        }
+
+        .plan-card .badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #00ff88;
+            color: #0a1628;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .plan-card h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #4db8ff;
+        }
+
+        .plan-price {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00ff88;
+            margin: 20px 0;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+
+        .plan-features li:before {
+            content: "✓ ";
+            color: #00ff88;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Differentials Section */
+        .differentials {
+            padding: 80px 20px;
+        }
+
+        .differentials h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 60px;
+            color: #00ff88;
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .diff-card {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 123, 255, 0.1) 100%);
+            padding: 40px 30px;
+            border-radius: 15px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .diff-card .icon {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .diff-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #00ff88;
+        }
+
+        .diff-card p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.2) 0%, rgba(0, 255, 136, 0.2) 100%);
+        }
+
+        .contact h2 {
+            font-size: 42px;
+            margin-bottom: 30px;
+            color: #00ff88;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 40px;
+            border-radius: 50px;
+            transition: transform 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: scale(1.05);
+        }
+
+        .contact-item .icon {
+            font-size: 32px;
+            color: #00ff88;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 30px;
+            box-shadow: 0 5px 25px rgba(37, 211, 102, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        footer p {
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .price-highlight {
+                font-size: 36px;
+                padding: 20px 40px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .plans-grid,
+            .features-grid,
+            .vehicles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+
+<meta name="description" content="Rastreamento veicular com tecnologia 4G, bloqueio remoto e monitoramento 24h. Atendemos Curitiba, região metropolitana e todo o Brasil. Planos a partir de R$ 24,90.">
+
+<meta name="keywords" content="rastreador veicular curitiba, rastreamento veicular brasil, gps carro, rastreador moto, bloqueio veicular, rastreador barato">
+
+<meta name="robots" content="index, follow">
+<meta name="author" content="GuardionX">
+
+<!-- SEO SOCIAL (quando compartilhar no WhatsApp/Facebook) -->
+<meta property="og:title" content="GuardionX - Rastreamento Veicular Inteligente">
+<meta property="og:description" content="Proteja seu veículo com rastreamento 24h e bloqueio remoto.">
+<meta property="og:image" content="https://www.guardionx.com.br/logo.png">
+<meta property="og:url" content="https://www.guardionx.com.br">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "GuardionX",
+  "url": "https://www.guardionx.com.br",
+  "telephone": "+55 41 99535-0844",
+  "areaServed": [
+    "Curitiba",
+    "Região Metropolitana de Curitiba",
+    "Brasil"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Curitiba",
+    "addressRegion": "PR",
+    "addressCountry": "BR"
+  }
+}
+</script>
+
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav style="
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        ">
+            <!-- Logo -->
+            <div class="logo" style="display: flex; align-items: center;">
+                <img src="logo.png" alt="GuardionX" height="100">
+            </div>
+
+            <!-- Links -->
+            <ul class="nav-links" style="
+                display: flex;
+                gap: 20px;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            ">
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="#planos">Planos</a></li>
+                <li><a href="#veiculos">Veículos</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="subtitle">RASTREAMENTO INTELIGENTE</div>
+            <h1>Rastreamento Veicular em Curitiba e Região Metropolitana com Bloqueio Remoto e Monitoramento 24h</h1>
+            <p class="tagline">Atendemos Curitiba, região metropolitana e todo o Brasil.</p>
+            <p class="tagline">Mais que rastreamento. Inteligência em movimento.</p>
+            
+            <div class="price-highlight">
+                <span class="currency">R$</span> 24<sup>,90</sup>
+                <span class="period">Mensal!</span>
+            </div>
+
+           <!-- <p style="font-size: 20px; margin: 20px 0; color: #ccc;">
+                💰 Instalação: R$ 239,90 (com instalação) ou R$ 130,00 (só o aparelho)
+            </p> -->
+
+            <p>
+
+            </p>  
+        
+        
+
+            <a href="#planos" class="cta-button">VER PLANOS</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="recursos" class="features">
+        <div class="container">
+            <h2>Recursos Completos</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>Rastreamento 24h</h3>
+                    <p>Localização em tempo real, 24 horas por dia, direto no seu celular ou computador</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Bloqueio Remoto</h3>
+                    <p>Bloqueie o veículo imediatamente em caso de roubo com poucos cliques</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Acesso Total</h3>
+                    <p>Celular, tablet ou computador - controle de qualquer lugar</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Alertas Inteligentes</h3>
+                    <p>Movimento, ignição, velocidade - tudo no WhatsApp automaticamente</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🗺️</div>
+                    <h3>Histórico Completo</h3>
+                    <p>Rotas e paradas gravadas para consulta a qualquer momento</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Cerca Virtual</h3>
+                    <p>Defina áreas permitidas e receba alerta se o veículo sair</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicles Section -->
+    <section id="veiculos" class="vehicles">
+        <div class="container">
+            <h2>Atendemos Todos os Tipos de Veículos</h2>
+            <p class="vehicles-subtitle">Rastreamento especializado para cada necessidade</p>
+            
+            <div class="vehicles-grid">
+                <div class="vehicle-card">
+                    <div class="icon">🚗</div>
+                    <h3>CARROS</h3>
+                </div>
+
+                <div class="vehicle-card">
+                    <div class="icon">🏍️</div>
+                    <h3>MOTOS</h3>
+                </div>
+
+                <div class="vehicle-card">
+                    <div class="icon">🚚</div>
+                    <h3>CAMINHÕES</h3>
+                </div>
+
+                <div class="vehicle-card">
+                    <div class="icon">⛵</div>
+                    <h3>EMBARCAÇÕES</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans Section -->
+    <section id="planos" class="plans">
+        <div class="container">
+            <h2>Escolha Seu Plano</h2>
+            
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <h3>Somente Aparelho</h3>
+                    <div class="plan-price">R$ 129<sup>,90</sup></div>
+                    <p style="color: #aaa; margin-bottom: 20px;">Pagamento único</p>
+                    
+                    <ul class="plan-features">
+                        <li>Rastreador 2/4G</li>
+                        <li>Chip multi operadora incluso</li>
+                        <li>Você instala onde desejar</li>
+                        <li>Equipamento desbloqueado</li>
+                        <!-- <li>Garantia de 12 meses</li> -->
+                    </ul>
+
+                    <p style="margin-top: 20px; color: #00ff88;">+ Mensalidade R$ 24,90</p>
+                </div>
+
+                <div class="plan-card featured">
+                    <div class="badge">MAIS VENDIDO</div>
+                    <h3>Completo</h3>
+                    <div class="plan-price">R$ 239<sup>,90</sup></div>
+                    <p style="color: #aaa; margin-bottom: 20px;">2x Sem Juros</p>
+                    <p style="color: #aaa; margin-bottom: 20px;">Pagamento único</p>
+                    
+                    <ul class="plan-features">
+                        <li>Rastreador 2G/4G</li>
+                        <li>Chip multi operadora incluso</li>
+                        <li>Instalação profissional INCLUSA Curitiba e Região</li>
+                        <li>Equipamento desbloqueado</li>
+                        <!-- <li>Garantia de 12 meses</li>
+                        <li>Suporte prioritário 24h</li> -->
+                    </ul>
+
+                    <p style="margin-top: 20px; color: #00ff88;">+ Mensalidade R$ 24,90</p>
+                </div>
+            </div>
+
+         <div style="
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 50px;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(0,255,136,0.02));
+    border-radius: 20px;
+    border: 1px solid rgba(0,255,136,0.25);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+">
+
+    <!-- TEXTO -->
+    <div style="
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 40px;
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(0,255,136,0.02));
+    border-radius: 20px;
+    border: 1px solid rgba(0,255,136,0.25);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+">
+
+    <!-- IMAGEM (vem primeiro no mobile) -->
+    <div style="text-align: center;">
+        <img src="j16.jpg" 
+             alt="Rastreador Veicular 2G 4G Com Bloqueio Remoto"
+             style="
+                width: 100%;
+                max-width: 300px;
+                border-radius: 15px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+             ">
+    </div>
+
+    <!-- TEXTO -->
+    <div style="text-align: left;">
+        
+        <h3 style="
+            color: #00ff88;
+            font-size: 20px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        ">
+            📡 Tecnologia de ponta em rastreamento veicular
+        </h3>
+
+        <p style="
+            color: #bbb;
+            font-size: 15px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        ">
+            Rastreadores de alto desempenho com máxima precisão, estabilidade e segurança para seu veículo.
+        </p>
+
+        <ul style="
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #ddd;
+            font-size: 14px;
+            line-height: 1.7;
+        ">
+            <li>✅ 4G com fallback automático para 2G</li>
+            <li>📶 Chip multi operadora (Vivo, Claro, TIM)</li>
+            <li>⚡ Melhor rede automaticamente</li>
+            <li>🔒 Monitoramento em tempo real</li>
+        </ul>
+
+    </div>
+
+</div>
+
+<!-- RESPONSIVO PARA DESKTOP -->
+<style>
+@media (min-width: 768px) {
+    div[style*="flex-direction: column"] {
+        flex-direction: row !important;
+        align-items: center;
+        padding: 40px !important;
+    }
+
+    div[style*="flex-direction: column"] > div {
+        flex: 1;
+    }
+
+    h3 {
+        font-size: 26px !important;
+    }
+
+    p {
+        font-size: 17px !important;
+    }
+
+    ul {
+        font-size: 16px !important;
+    }
+}
+</style>
+
+
+        </div>
+    </section>
+
+    <!-- Differentials Section -->
+    <section class="differentials">
+        <div class="container">
+            <h2>Nossos Diferenciais</h2>
+            
+            <div class="diff-grid">
+                <div class="diff-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Mais Segurança</h3>
+                    <p>Proteção contra roubos e furtos com bloqueio imediato do veículo</p>
+                </div>
+
+                <div class="diff-card">
+                    <div class="icon">💰</div>
+                    <h3>Menos Custos</h3>
+                    <p>Reduza despesas e tenha mais economia com rastreamento eficiente</p>
+                </div>
+
+                <div class="diff-card">
+                    <div class="icon">⚡</div>
+                    <h3>Mais Agilidade</h3>
+                    <p>Respostas rápidas em qualquer situação com sistema veloz</p>
+                </div>
+
+                <div class="diff-card">
+                    <div class="icon">📊</div>
+                    <h3>Mais Controle</h3>
+                    <p>Tenha o total controle na palma da sua mão</p>
+                </div>
+
+                <div class="diff-card">
+                    <div class="icon">🔓</div>
+                    <h3>Equipamento Desbloqueado</h3>
+                    <p>Não fica preso a uma plataforma. Você tem liberdade total!</p>
+                </div>
+
+                <div class="diff-card">
+                    <div class="icon">🚀</div>
+                    <h3>Plataforma Própria</h3>
+                    <p>Sistema robusto, rápido e estável gerenciado por nós com suporte 24h</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="contact">
+        <div class="container">
+            <h2>Fale com a Gente!</h2>
+            <p style="font-size: 20px; margin-bottom: 30px; color: #ccc;">
+                Atendimento personalizado e suporte 24 horas!
+            </p>
+
+            
+            <a href="https://wa.me/5541995350844" target="_blank" class="whatsapp-btn">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            (41) 99535-0844
+            </a>
+
+            <div style="margin-top: 20px;">
+               <a href="https://wa.me/5541995270009" target="_blank" class="whatsapp-btn">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            (41) 99527-0009
+            </a>
+            </div>
+
+            <!-- <div style="margin-top: 50px;">
+                <p style="font-size: 18px; color: #4db8ff;">🌐 Acesse nosso site:</p>
+                <a href="http://www.guardionx.com.br" target="_blank" 
+                   style="color: #00ff88; font-size: 24px; text-decoration: none; font-weight: bold;">
+                    www.guardionx.com.br
+                </a>
+            </div> -->  
+        </div>
+    </section>
+
+    <section style="max-width:900px; margin:auto; padding:40px; color:#ccc; font-size:15px; line-height:1.6;">
+<h2>Rastreamento Veicular em Curitiba, Região Metropolitana e Todo o Brasil</h2>
+
+<p>
+A GuardionX oferece soluções completas em rastreamento veicular com tecnologia 4G, bloqueio remoto e monitoramento em tempo real. 
+Atendemos Curitiba, região metropolitana e todo o Brasil, garantindo segurança e controle total do seu veículo.
+</p>
+
+<p>
+Nosso sistema permite acompanhamento 24 horas, alertas inteligentes, histórico de rotas e conexão multi operadora para máxima estabilidade.
+Ideal para carros, motos, caminhões e frotas.
+</p>
+</section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>🛡️ <strong>GuardionX</strong> - Rastreamento Inteligente</p>
+            <p style="margin-top: 10px; font-size: 14px;">
+                Mais que rastreamento. Inteligência em movimento.
+            </p>
+            <p style="margin-top: 20px; font-size: 12px; color: #666;">
+                © 2026 GuardionX. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
